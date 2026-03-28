@@ -1,4 +1,13 @@
 baseURL = 'https://XBlankZGap.github.io/'
-locale = 'en-us'
-title = 'My New Hugo Project'
+languageCode = 'en-us'
+title = "Sophy's Portfolio"
 theme = 'PaperMod'
+
+[[menu.main]]
+    name = "Contact"
+    url = "contact/"
+    weight = 60
+
+[params]
+    # This combines your footer ideas into one professional line
+    footerContent = "Ready for a Security Audit? [Email Me](mailto:your-email@example.com) | [Contact Form](/contact/)"
