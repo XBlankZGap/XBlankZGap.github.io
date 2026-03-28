@@ -1,0 +1,256 @@
+USING THE NEW GIT SITES
+
++++++++++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++++++++++
+
+1. Creating a New Post
+
++++++++++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++++++++++
+
+Every time you want to add a new project, audit, or lab report, you use the hugo new command.
+
+On your Kali machine:
+Bash
+
+cd ~/cyber-portfolio  # Or whichever site you want to update
+hugo new posts/target-machine-exploit.md
+hugo new posts/network-recon-study.md
+
++++++++++++++++++++++++++++++++++++++++++++
+2. The "Visibility" Check (Crucial)
++++++++++++++++++++++++++++++++++++++++++++
+
+As we discussed, Hugo won't show the post unless you tell it the post is ready. Open each new file:
+Bash
+
+mousepad content/posts/target-machine-exploit.md
+
+Change draft: true to draft: false. If you leave it as true, the post will exist in your folder but will be invisible on the website.
+
+
++++++++++++++++++++++++++++++++++++++++++++
+How Hugo Displays Them
++++++++++++++++++++++++++++++++++++++++++++
+
+You don't need to create a new "Link" for every post.
+
+    The Home Page: Most themes (like PaperMod) will automatically show a list of your most recent posts on the front page.
+
+    The Archive: If you have many posts, Hugo creates a "Posts" section. If you visit your-site.com/posts/, you will see every single article you've ever written.
+
++++++++++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++++++++++
+
+4. Organizing with Categories and Tags
+
++++++++++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++++++++++
+
+To keep your portfolio professional, you should categorize your posts. You do this in the Frontmatter (the top of the .md file).
+
+Example for a Cyber Lab post:
+YAML
+
+---
+title: "Metasploit Exploitation Lab"
+date: 2026-03-27
+draft: false
+tags: ["Metasploit", "Penetration Testing", "Kali Linux"]
+categories: ["Lab Reports"]
+---
+
+Example for an SEO post:
+YAML
+
+---
+title: "E-commerce Site Audit"
+date: 2026-03-27
+draft: false
+tags: ["Keyword Research", "On-Page SEO"]
+categories: ["Case Studies"]
+---
+
++++++++++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++++++++++
+
+5. Updating the Live Site
+
++++++++++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++++++++++
+
+Whenever you finish writing your new posts on Kali, the process is always the same three steps:
+Bash
+
+git add .
+git commit -m "Added two new lab reports"
+git push
+
+Since you set up the credential.helper store earlier, you won't have to type your password this time!
+Pro-Tip: Adding Images to Posts
+
+If you take a screenshot of a terminal exploit or an SEO dashboard:
+
+    Place the image in static/images/my-screenshot.png.
+
+    In your Markdown file, display it like this:
+    ![Description of Image](/images/my-screenshot.png)
+    
+    
+ +++++++++++++++++++++++++++++++++++++++++++
+  +++++++++++++++++++++++++++++++++++++++++++
+    
+Enable Search in hugo.toml
+
++++++++++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++++++++++
+
+Open your configuration file on Kali:
+Bash
+
+mousepad ~/resume/hugo.toml  # Or whichever site you want to add search to
+
+Add these lines to the bottom of the file:
+Ini, TOML
+
+[outputs]
+    home = ["HTML", "RSS", "JSON"]
+
+[[menu.main]]
+    name = "Search"
+    url = "search/"
+    weight = 50
+
+    Why this works: Hugo needs to create a search.json file (the "index") so it can look through your posts instantly. The [[menu.main]] part adds a clickable "Search" link to your top navigation bar.
+    
+    +++++++++++++++++++++++++++++++++++++++++++
+
+2. Create the Search Page
+
+++++++++++++++++++++++++++++++++++++++++++++++
+
+Now you need to create the actual page where the search bar will live. Run this in your terminal:
+Bash
+
+hugo new search.md
+
+Now, edit that new file:
+Bash
+
+mousepad content/search.md
+
+Replace everything in that file with this exact code:
+YAML
+
+---
+title: "Search"
+layout: "search"
+summary: "search"
+placeholder: "Search my projects, labs, or audits..."
+---
+
+(Note: You don't need draft: false here because the layout: "search" tells PaperMod to make it live immediately.)
+3. Push the Changes
+
+Since you saved your credentials earlier, this will be fast:
+Bash
+
+git add .
+git commit -m "Add search functionality"
+git push
+
+4. How it looks on your phone
+
+Since you asked about your phone earlier, this is a great feature to test there. Once the GitHub Action turns green:
+
+    Open your site on your phone.
+
+    You will see a new "Search" link in the menu.
+
+    Tap it and type a keyword like "Metasploit" or "SEO."
+
+    The results will pop up instantly without the page even reloading.
+    
+    
+    +++++++++++++++++++++++++++++++++++++++++++++++++
+    +++++++++++++++++++++++++++++++++++++++++++++++
+
+Pro-Tip: Adding "Social Media" Icons
+
+_++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+Since this is a resume and portfolio, you likely want people to find your LinkedIn or GitHub easily. You can add these to your hugo.toml under [params]:
+Ini, TOML
+
+[[params.socialIcons]]
+    name = "github"
+    url = "https://github.com/XBlankZGap"
+[[params.socialIcons]]
+    name = "linkedin"
+    url = "https://linkedin.com/in/your-profile"
+    
+    
+    Hugo automatically looks into your content/posts/ folder. It takes every .md file that has draft: false and lists them one after another.
+If you want a "Real" Homepage File
+
+If you don't like that the theme is doing it automatically and you want a specific file you can edit for the homepage (like your experience.md file), you can create a special file:
+Bash
+
+# Run this on Kali in your project folder
+mousepad content/_index.md
+
+Anything you write in _index.md will become the "Body" of your homepage. * If you don't create this file: Hugo just shows your recent posts.
+
+    If you do create this file: Hugo shows whatever text you put inside it plus your recent posts.
+    
+    
+    +++++++++++++++++++++++++++++++++++++++++++
+    ++++++++++++++++++++++++++++++++++++++++
+    
+    
+    Pro-Tip for your Kali Workflow
+
+Since you’ll be making many posts, you can use this shortcut to see your changes locally before you push to GitHub. Run this in your terminal:
+Bash
+
+hugo server -D
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
